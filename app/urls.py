@@ -7,4 +7,10 @@ urlpatterns=[
        url(r'^$',views.home,name='Home'),
        url(r'^new_project',views.new_project,name='new_project'),
        url(r'^new/profile$', views.new_profile, name='new-profile'),
-       
+       url(r'^profile/',views.profile, name='profile'),
+       url(r'^rate/(\d+)$',views.rating,name='rating'),
+       url(r'^search/',views.search_projects,name='search_projects'),
+
+
+]
+
