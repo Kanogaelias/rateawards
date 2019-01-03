@@ -43,3 +43,19 @@ def new_profile(request):
         profile_form = NewProfileForm()
     return render(request, 'new_profile.html', {"profile_form": profile_form,})
 
+def rating(request,rate_id):
+
+    current_user = request.user
+    project = get_object_or_404(Project,pk=rate_id)
+    if request.method == 'POST':
+        rate_form = RateForm(request.POST, request.FILES)
+        if rate_form.is_valid():
+            rate = rate_form.save(commit=False)
+            rate.project = project
+            rate.rater = current_user
+            rate.save()
+        return redirect('Home')
+
+    return render(request, 'index.html')
+
+
