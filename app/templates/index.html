@@ -1,0 +1,45 @@
+{%extends 'base.html'%}
+{%block content%}
+{% load bootstrap3 %} {% load staticfiles %
+{%for project in projects%}
+<div style="color:black;background-color:white;border-style:solid;border-color:#4F0505;margin:20px;"class="col-md-5">
+<h1><a  href="{{project.link}}">{{project.title}}</a></h1>
+<img src="{{project.project_image.url}}" style="height:200px">
+<h4>by {{project.owner.username}}</h4>
+<p>{{project.description}}</p>
+<p>average rating: {{project.average_rating}}</p>
+<!-- <button  type='button' data-toggle="modal" datat-target="{{project.id}}">rate</button> -->
+<a class="img-thumbnail" href="{{project.project_image}}" data-image-id="{{project.id}}" data-toggle="modal" data-target="#{{project.id}}">
+        rate
+             </a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="{{project.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        Rate
+      </div>
+      <div class="modal-body">
+
+    <form action="{%url 'rating' project.id %}" method="post" enctype="multipart/form-data">
+      {%csrf_token%}
+
+      {% bootstrap_form rate_form %}
+      <input type="submit" class="btn btn-success btn-lg" value="Post">
+    </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+
+
+{%endblock%}
